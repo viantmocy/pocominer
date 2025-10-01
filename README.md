@@ -15,24 +15,39 @@ This repository only contains my **personal setup** for learning and mining purp
 
 ---
 
-## 🚀 Quick Start (Termux)
-Clone repo ini dan langsung build di device-mu:
+# Pocominer 💕  
 
-```bash
-pkg install -y git
-git clone https://github.com/viantmocy/pocominer
-cd pocominer
-chmod +x setup.sh start.sh
-./setup.sh   # build ccminer sesuai arsitektur CPU
-./start.sh   # mulai mining dengan cinta 💕
-
+Optimized ccminer untuk mining Verus di ARM/Android (Termux).  
 
 ---
 
-⚙️ Config
+## 🚀 Quick Setup (Termux)
 
-Edit config.json untuk menyesuaikan pool, wallet, dan threads:
+Copy & paste semua baris ini di Termux:
 
+```bash
+pkg update -y && pkg upgrade -y
+pkg install -y git
+
+# Clone repo
+git clone https://github.com/viantmocy/pocominer
+cd pocominer
+
+# Build miner
+chmod +x setup.sh start.sh
+./setup.sh
+
+# Jalankan mining
+./start.sh
+```
+
+---
+
+## ⚙️ Config
+
+Edit file `config.json` untuk menyesuaikan pool, wallet, dan threads:
+
+```json
 {
   "algo": "verus",
   "threads": 8,
@@ -48,46 +63,12 @@ Edit config.json untuk menyesuaikan pool, wallet, dan threads:
     }
   ]
 }
-
-
----
-
-❤️ Credits
-
-Original ccminer by Christian Buchner & Christian H.
-
-Verus optimizations by Monkins1010
-
-ARM optimizations by Mixed-Nuts
-
-Adapted & compiled for my device with love 💕
-
-
+```
 
 ---
 
-📦 Copy & Paste Setup (Termux)
-
-👉 Tinggal copy block ini, paste ke Termux, dan semuanya siap jalan:
-
-pkg update -y && pkg upgrade -y
-pkg install -y git
-
-# Clone repo
-git clone https://github.com/viantmocy/pocominer
-cd pocominer
-
-# Izin eksekusi + build
-chmod +x setup.sh start.sh
-./setup.sh
-
-# Jalankan mining
-./start.sh
-
-
----
-
-🌸 Made with love by viantmocy 🌸
-
-Jadi di bagian **📦 Copy & Paste Setup** ada satu blok besar tinggal sekali copy di GitHub, langsung jalan di Termux.
-
+## ❤️ Credits
+- Original ccminer by Christian Buchner & Christian H.  
+- Verus optimizations by Monkins1010  
+- ARM optimizations by Mixed-Nuts  
+- Adapted & compiled for my device with love 💕  
