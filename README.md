@@ -1,7 +1,4 @@
-
----
-
-# 💕 POCOMINER 💕  
+# 💕 POCOMINER 💕
 > Personal used of **Poco M4 Pro** for mining VerusCoin with help of `ccminer` optimized by the original creators.  
 
 ⚠️ **Disclaimer**: I am **not involved** in developing or being part of the development of this project.  
@@ -45,14 +42,15 @@ chmod +x setup.sh start.sh install.sh
 
 # Jalankan mining
 ./start.sh
-
+```
 
 ---
 
-⚙️ Config
+## ⚙️ Config
 
-Edit file config.json untuk menyesuaikan pool, wallet, dan threads:
+Edit file `config.json` untuk menyesuaikan pool, wallet, dan threads:  
 
+```json
 {
   "algo": "verus",
   "threads": 8,
@@ -68,39 +66,31 @@ Edit file config.json untuk menyesuaikan pool, wallet, dan threads:
     }
   ]
 }
-
-
----
-
-🔧 Parameter Detail
-
-threads → jumlah core yang dipakai. Sesuaikan dengan device:
-
-Single/Dual-core → 1 atau 2
-
-Quad-core (4) → 3 atau 4
-
-Hexa-core (6) → 5 atau 6
-
-Octa-core (8) → 7 atau 8
-
-
-cpu-affinity → mask core yang dipakai (contoh 0xFF artinya semua core).
-
-cpu-priority → prioritas proses (1 rendah → 5 tinggi).
-
-statsavg → waktu rata-rata laporan (detik).
-
-quiet → jika true, log lebih singkat.
-
-
+```
 
 ---
 
-📑 Contoh Config
+## 🔧 Parameter Detail
 
-Low-end device (Dual-core):
+- **threads** → jumlah core yang dipakai. Sesuaikan dengan device:  
+  - Single/Dual-core → 1 atau 2  
+  - Quad-core (4) → 3 atau 4  
+  - Hexa-core (6) → 5 atau 6  
+  - Octa-core (8) → 7 atau 8  
+  - Deca-core (10) → 9 atau 10  
+  - Dodeca-core (12) → 11 atau 12  
 
+- **cpu-affinity** → mask core yang dipakai (contoh `0xFF` artinya semua core).  
+- **cpu-priority** → prioritas proses (1 rendah → 5 tinggi).  
+- **statsavg** → waktu rata-rata laporan (detik).  
+- **quiet** → jika `true`, log lebih singkat.  
+
+---
+
+## 📑 Contoh Config
+
+**Dual-core (2 threads):**
+```json
 {
   "algo": "verus",
   "threads": 2,
@@ -111,14 +101,17 @@ Low-end device (Dual-core):
   "pools": [
     {
       "url": "stratum+tcp://ap.luckpool.net:3956",
-      "user": "YOUR_WALLET.lowend",
+      "user": "YOUR_WALLET.dual",
       "pass": "x"
     }
   ]
 }
+```
 
-Mid device (Quad-core):
+---
 
+**Quad-core (4 threads):**
+```json
 {
   "algo": "verus",
   "threads": 4,
@@ -134,9 +127,33 @@ Mid device (Quad-core):
     }
   ]
 }
+```
 
-High-end device (Octa-core):
+---
 
+**Hexa-core (6 threads):**
+```json
+{
+  "algo": "verus",
+  "threads": 6,
+  "cpu-affinity": "0x3F",
+  "cpu-priority": 4,
+  "statsavg": 60,
+  "quiet": true,
+  "pools": [
+    {
+      "url": "stratum+tcp://ap.luckpool.net:3956",
+      "user": "YOUR_WALLET.hexa",
+      "pass": "x"
+    }
+  ]
+}
+```
+
+---
+
+**Octa-core (8 threads):**
+```json
 {
   "algo": "verus",
   "threads": 8,
@@ -152,21 +169,57 @@ High-end device (Octa-core):
     }
   ]
 }
-
-
----
-
-❤️ Credits
-
-Original ccminer by Christian Buchner & Christian H.
-
-Verus optimizations by Monkins1010
-
-ARM optimizations by Mixed-Nuts
-
-Adapted & compiled for my device with love 💕
-
+```
 
 ---
 
+**Deca-core (10 threads):**
+```json
+{
+  "algo": "verus",
+  "threads": 10,
+  "cpu-affinity": "0x3FF",
+  "cpu-priority": 5,
+  "statsavg": 60,
+  "quiet": true,
+  "pools": [
+    {
+      "url": "stratum+tcp://ap.luckpool.net:3956",
+      "user": "YOUR_WALLET.deca",
+      "pass": "x"
+    }
+  ]
+}
+```
 
+---
+
+**Dodeca-core (12 threads):**
+```json
+{
+  "algo": "verus",
+  "threads": 12,
+  "cpu-affinity": "0xFFF",
+  "cpu-priority": 5,
+  "statsavg": 60,
+  "quiet": true,
+  "pools": [
+    {
+      "url": "stratum+tcp://ap.luckpool.net:3956",
+      "user": "YOUR_WALLET.dodeca",
+      "pass": "x"
+    }
+  ]
+}
+```
+
+---
+
+## ❤️ Credits
+
+- Original ccminer by Christian Buchner & Christian H.  
+- Verus optimizations by Monkins1010  
+- ARM optimizations by Mixed-Nuts  
+- Adapted & compiled for my device with love 💕  
+
+---
