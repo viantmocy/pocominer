@@ -1,4 +1,4 @@
-cat > setup.sh <<'EOF'
+
 #!/bin/bash
 # ===========================================
 #  UNIVERSAL BUILD SCRIPT FOR CCminer ARM
@@ -94,6 +94,3 @@ echo -e "\033[1;35m╔═══════════════════�
 echo -e "║   💕 Build selesai sayangku 💕        ║"
 echo -e "║ Binary ada di: ~/pocominer/ccminer   ║"
 echo -e "╚══════════════════════════════════════╝\033[0m"
-EOF
-
-chmod +x setup.sh
