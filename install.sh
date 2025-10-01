@@ -1,29 +1,27 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# ===========================================
-#   INSTALLER SCRIPT UNTUK POCOMINER
-#   By Leafia 💕 untuk sayangku
-# ===========================================
-
 set -e
-cd ~/pocominer || exit 1
 
-echo -e "\033[1;36m═══════════════════════════════════════\033[0m"
-echo -e " 💎 Binary ccminer sudah tersedia di repo ini"
-echo -e " Apakah kamu ingin compile ulang sesuai CPU?"
-echo -e "   [Y] Ya, compile ulang (hapus binary lama)"
-echo -e "   [N] Tidak, gunakan precompiled binary"
-echo -e "\033[1;36m═══════════════════════════════════════\033[0m"
-read -rp " Pilihan kamu (Y/N): " choice
+while true; do
+    echo "═══════════════════════════════════════"
+    echo " 💎 Binary ccminer tersedia di repo ini"
+    echo " Apakah kamu ingin compile ulang sesuai CPU?"
+    echo "   [Y] Ya, jalankan setup.sh untuk compile ulang"
+    echo "   [N] Tidak, gunakan binary bawaan"
+    echo "═══════════════════════════════════════"
+    read -p " Pilihan kamu (Y/N): " choice
 
-case "$choice" in
-    [Yy]*)
-        echo -e "\033[1;33m[+] Menghapus binary lama...\033[0m"
-        [ -f ccminer ] && rm -f ccminer
-        cd CCminer-ARM-optimized || exit 1
-        echo -e "\033[1;32m[+] Compile ulang dengan setup.sh...\033[0m"
-        ../setup.sh
-        ;;
-    *)
-        echo -e "\033[1;35m[+] Menggunakan precompiled binary...\033[0m"
-        ;;
-esac
+    # Ubah input ke huruf besar supaya Y/y dan N/n sama
+    choice_upper=$(echo "$choice" | tr '[:lower:]' '[:upper:]')
+
+    if [[ "$choice_upper" == "Y" ]]; then
+        echo "[+] Menjalankan setup.sh untuk compile ulang..."
+        bash -x ./setup.sh
+        echo "✅ Setup selesai, binary ccminer baru siap di ~/pocominer/ccminer!"
+        break
+    elif [[ "$choice_upper" == "N" ]]; then
+        echo "⚡ Menggunakan binary bawaan di repo ini."
+        break
+    else
+        echo "❌ Pilihan tidak valid. Harap masukkan Y atau N."
+    fi
+done
