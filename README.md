@@ -1,46 +1,37 @@
----
-
-💕 POCOMINER 💕
-
-> Personal used of Poco M4 Pro for mining VerusCoin with help of ccminer optimized by the original creators.
-
-
-
-⚠️ Disclaimer: I am not involved in developing or being part of the development of this project.
-This repository only contains my personal setup for learning and mining purposes. Everyone is welcome to try, but use at your own risk.
-
 
 ---
 
-✨ Features
+# 💕 POCOMINER 💕  
+> Personal used of **Poco M4 Pro** for mining VerusCoin with help of `ccminer` optimized by the original creators.  
 
-📱 Works on ARM (Poco M4 Pro, Cortex-A53, A55, A76, Kryo, Exynos, dsb.)
-
-⚡ Optimized universal build script (setup.sh)
-
-🎨 Colorful start script (start.sh) dengan wakelock support
-
-🛠 Auto-detect CPU architecture + best compile flags
-
-💗 Simple usage, clone & run
-
-
+⚠️ **Disclaimer**: I am **not involved** in developing or being part of the development of this project.  
+This repository only contains my **personal setup** for learning and mining purposes. Everyone is welcome to try, but use at your own risk.  
 
 ---
 
-Pocominer 💕
-
-Optimized ccminer untuk mining Verus di ARM/Android (Termux).
-
+## ✨ Features
+- 📱 Works on ARM (Poco M4 Pro, Cortex-A53, A55, A76, Exynos, Kryo, etc.)
+- ⚡ Optimized universal build script (`setup.sh`)
+- 🎨 Colorful start script (`start.sh`) with wakelock support
+- 🛠 Auto-detects CPU architecture and applies best compile flags
+- 💗 Simple usage, just clone & run
 
 ---
 
-🚀 Quick Setup (Termux)
+## 📊 Status
+[![Platform](https://img.shields.io/badge/Platform-ARM%20%7C%20Termux-green?style=flat-square)](#)  
+[![Status](https://img.shields.io/badge/Build-Working-success?style=flat-square)](#)  
+[![License](https://img.shields.io/badge/License-Personal-blueviolet?style=flat-square)](#)  
 
-Klik tombol di bawah untuk copy semua perintah:
+---
 
+## 🚀 Quick Setup (Termux)
 
+Klik tombol di bawah untuk **copy semua perintah setup**:  
 
+[![Copy Setup](https://img.shields.io/badge/📋%20Copy%20Setup-Termux-blueviolet?style=for-the-badge)](#)  
+
+```bash
 pkg update -y && pkg upgrade -y
 pkg install -y git
 
@@ -58,14 +49,9 @@ chmod +x setup.sh start.sh install.sh
 
 ---
 
-
-
----
-
 ⚙️ Config
 
-Semua pengaturan ada di file config.json.
-Kamu bisa tuning sesuai jumlah core & performa device.
+Edit file config.json untuk menyesuaikan pool, wallet, dan threads:
 
 {
   "algo": "verus",
@@ -86,29 +72,40 @@ Kamu bisa tuning sesuai jumlah core & performa device.
 
 ---
 
-🔧 Parameter Utama
+🔧 Parameter Detail
 
-Parameter	Penjelasan	Contoh
+threads → jumlah core yang dipakai. Sesuaikan dengan device:
 
-threads	Jumlah thread mining. Sesuaikan dengan jumlah core. <br>• Quad-core: 4 <br>• Hexa-core: 6 <br>• Octa-core: 8 <br>• 12-core: 12	4, 6, 8, 12
-cpu-affinity	Masking core mana yang dipakai (hex). <br>Contoh: 0xF (4 core pertama), 0xFF (8 core), 0xFFF (12 core).	0xF, 0xFF, 0xFFF
-cpu-priority	Prioritas proses CPU (1 = rendah, 5 = normal, 9 = tinggi). Untuk mining disarankan 5.	5
-statsavg	Interval rata-rata statistik (detik). Nilai besar = stabil, kecil = lebih cepat update.	60
-quiet	Jika true, output lebih ringkas. Jika false, semua log tampil.	true
+Single/Dual-core → 1 atau 2
+
+Quad-core (4) → 3 atau 4
+
+Hexa-core (6) → 5 atau 6
+
+Octa-core (8) → 7 atau 8
+
+
+cpu-affinity → mask core yang dipakai (contoh 0xFF artinya semua core).
+
+cpu-priority → prioritas proses (1 rendah → 5 tinggi).
+
+statsavg → waktu rata-rata laporan (detik).
+
+quiet → jika true, log lebih singkat.
 
 
 
 ---
 
-📄 Contoh Config
+📑 Contoh Config
 
-🔹 Low-end (Quad-core, 4 threads)
+Low-end device (Dual-core):
 
 {
   "algo": "verus",
-  "threads": 4,
-  "cpu-affinity": "0xF",
-  "cpu-priority": 5,
+  "threads": 2,
+  "cpu-affinity": "0x3",
+  "cpu-priority": 3,
   "statsavg": 60,
   "quiet": true,
   "pools": [
@@ -120,25 +117,25 @@ quiet	Jika true, output lebih ringkas. Jika false, semua log tampil.	true
   ]
 }
 
-🔹 Mid-range (Hexa-core, 6 threads)
+Mid device (Quad-core):
 
 {
   "algo": "verus",
-  "threads": 6,
-  "cpu-affinity": "0x3F",
-  "cpu-priority": 5,
+  "threads": 4,
+  "cpu-affinity": "0xF",
+  "cpu-priority": 4,
   "statsavg": 60,
   "quiet": true,
   "pools": [
     {
       "url": "stratum+tcp://ap.luckpool.net:3956",
-      "user": "YOUR_WALLET.midrange",
+      "user": "YOUR_WALLET.quad",
       "pass": "x"
     }
   ]
 }
 
-🔹 High-end (Octa-core, 8 threads)
+High-end device (Octa-core):
 
 {
   "algo": "verus",
@@ -150,25 +147,7 @@ quiet	Jika true, output lebih ringkas. Jika false, semua log tampil.	true
   "pools": [
     {
       "url": "stratum+tcp://ap.luckpool.net:3956",
-      "user": "YOUR_WALLET.highend",
-      "pass": "x"
-    }
-  ]
-}
-
-🔹 Powerful (12-core)
-
-{
-  "algo": "verus",
-  "threads": 12,
-  "cpu-affinity": "0xFFF",
-  "cpu-priority": 5,
-  "statsavg": 60,
-  "quiet": true,
-  "pools": [
-    {
-      "url": "stratum+tcp://ap.luckpool.net:3956",
-      "user": "YOUR_WALLET.power",
+      "user": "YOUR_WALLET.octa",
       "pass": "x"
     }
   ]
@@ -188,6 +167,6 @@ ARM optimizations by Mixed-Nuts
 Adapted & compiled for my device with love 💕
 
 
-
 ---
+
 
