@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # ===========================================
 #  UNIVERSAL BUILD SCRIPT FOR CCminer ARM
@@ -7,9 +6,33 @@
 
 set -e
 
-echo -e "\033[1;35m╔══════════════════════════════════════╗"
-echo -e "║   💗 CCminer Universal Builder 💗    ║"
-echo -e "╚══════════════════════════════════════╝\033[0m"
+# Fungsi untuk cetak kotak dinamis
+print_box() {
+    local text="$1"
+    local color="${2:-35}"  # default ungu
+    local padding=2
+
+    # Hitung panjang teks tanpa escape sequence
+    local clean_text=$(echo -e "$text" | sed 's/\x1b\[[0-9;]*m//g')
+    local len=${#clean_text}
+    local width=$((len + padding * 2))
+
+    # Buat garis atas
+    printf "\033[1;%sm╔%0.s═" "$color" $(seq 1 $width)
+    echo "╗"
+
+    # Tulis teks dengan padding
+    printf "\033[1;%sm║%*s%s%*s║\033[0m\n" "$color" "$padding" "" "$text" "$padding" ""
+
+    # Buat garis bawah
+    printf "\033[1;%sm╚%0.s═" "$color" $(seq 1 $width)
+    echo "╝\033[0m"
+}
+
+# ===============================
+# Header
+# ===============================
+print_box "💗 CCminer Universal Builder 💗"
 
 # 1. Install dependencies
 echo -e "\033[1;33m[+] Installing build tools...\033[0m"
@@ -29,24 +52,20 @@ echo -e "\033[1;36m[+] Detected CPU: $CPU\033[0m"
 
 # 4. Tentukan flag compile
 case "$CPU" in
-  *A53*)   CFLAGS="-O3 -mcpu=cortex-a53 -mtune=cortex-a53" ;;
-  *A55*)   CFLAGS="-O3 -mcpu=cortex-a55 -mtune=cortex-a55" ;;
-  *A76*)   CFLAGS="-O3 -mcpu=cortex-a76 -mtune=cortex-a76" ;;
-  *Mongoose*|*Exynos*)
-           CFLAGS="-O3 -mcpu=exynos-m1 -mtune=exynos-m1" ;;
-  *Kryo*)  CFLAGS="-O3 -mcpu=cortex-a75 -mtune=cortex-a75" ;;
-  *)       CFLAGS="-O3 -march=armv8-a -mtune=native" ;;
+  *A53*)       CFLAGS="-O3 -mcpu=cortex-a53 -mtune=cortex-a53" ;;
+  *A55*)       CFLAGS="-O3 -mcpu=cortex-a55 -mtune=cortex-a55" ;;
+  *A76*)       CFLAGS="-O3 -mcpu=cortex-a76 -mtune=cortex-a76" ;;
+  *Mongoose*|*Exynos*) CFLAGS="-O3 -mcpu=exynos-m1 -mtune=exynos-m1" ;;
+  *Kryo*)      CFLAGS="-O3 -mcpu=cortex-a75 -mtune=cortex-a75" ;;
+  *)           CFLAGS="-O3 -march=armv8-a -mtune=native" ;;
 esac
 
 echo -e "\033[1;32m[+] Using compile flags: $CFLAGS\033[0m"
 
 # 5. Patch bug source
 echo -e "\033[1;34m[+] Applying patches...\033[0m"
-
-# Fix pthread cancel issue (hapus baris bermasalah di api.cpp)
 sed -i 's/.*pthread_setcanceltype.*//g' api.cpp
 
-# Fix endian macros fallback (untuk Termux/Android)
 if ! grep -q "LE_ENDIAN_FIX" serialize.hpp; then
 cat <<'PATCH' | sed -i '1r /dev/stdin' serialize.hpp
 // ====== LE_ENDIAN_FIX (Termux/Android) ======
@@ -90,7 +109,14 @@ make -j$(nproc)
 mkdir -p ~/pocominer
 cp ccminer ~/pocominer/
 
-echo -e "\033[1;35m╔══════════════════════════════════════╗"
-echo -e "║   💕 Build selesai sayangku 💕        ║"
-echo -e "║ Binary ada di: ~/pocominer/ccminer   ║"
-echo -e "╚══════════════════════════════════════╝\033[0m"
+# ===============================
+# Hapus sisa-sisa source
+# ===============================
+cd ~
+rm -rf CCminer-ARM-optimized
+
+# ===============================
+# Footer
+# ===============================
+print_box "💕 Build selesai sayangku 💕" 35
+echo -e "\033[1;32mBinary ada di: ~/pocominer/ccminer\033[0m"
