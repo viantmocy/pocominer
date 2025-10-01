@@ -34,8 +34,8 @@ git clone https://github.com/viantmocy/pocominer
 cd pocominer
 
 # Build miner
-chmod +x setup.sh start.sh
-./setup.sh
+chmod +x setup.sh start.sh install.sh
+./install.sh
 
 # Jalankan mining
 ./start.sh
