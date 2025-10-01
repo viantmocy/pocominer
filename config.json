@@ -1,0 +1,14 @@
+{
+  "algo": "verus",
+  "threads": 8,
+  "cpu-affinity": "0xFF",
+  "cpu-priority": 5,
+  "statsavg": 60,
+  "pools": [
+    {
+      "url": "stratum+tcp://ap.luckpool.net:3956",
+      "user": "RWcMnQJ12z8TYiaQVg8BARTwcvLGQq59ib.mwekPOCOm4",
+      "pass": "c=VRSC"
+    }
+  ]
+}
