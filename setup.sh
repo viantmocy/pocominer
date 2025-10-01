@@ -1,3 +1,4 @@
+cat > setup.sh <<'EOF'
 #!/bin/bash
 # ===========================================
 #  UNIVERSAL BUILD SCRIPT FOR CCminer ARM
@@ -39,13 +40,53 @@ esac
 
 echo -e "\033[1;32m[+] Using compile flags: $CFLAGS\033[0m"
 
-# 5. Build
+# 5. Patch bug source
+echo -e "\033[1;34m[+] Applying patches...\033[0m"
+
+# Fix pthread cancel issue (hapus baris bermasalah di api.cpp)
+sed -i 's/.*pthread_setcanceltype.*//g' api.cpp
+
+# Fix endian macros fallback (untuk Termux/Android)
+if ! grep -q "LE_ENDIAN_FIX" serialize.hpp; then
+cat <<'PATCH' | sed -i '1r /dev/stdin' serialize.hpp
+// ====== LE_ENDIAN_FIX (Termux/Android) ======
+#ifndef LE_ENDIAN_FIX
+#define LE_ENDIAN_FIX
+
+#include <stdint.h>
+
+#ifndef htole16
+#define htole16(x) ((uint16_t)(x))
+#endif
+#ifndef htole32
+#define htole32(x) ((uint32_t)(x))
+#endif
+#ifndef htole64
+#define htole64(x) ((uint64_t)(x))
+#endif
+
+#ifndef le16toh
+#define le16toh(x) ((uint16_t)(x))
+#endif
+#ifndef le32toh
+#define le32toh(x) ((uint32_t)(x))
+#endif
+#ifndef le64toh
+#define le64toh(x) ((uint64_t)(x))
+#endif
+
+#endif // LE_ENDIAN_FIX
+// ============================================
+PATCH
+fi
+
+# 6. Build
 ./build.sh clean || true
 ./autogen.sh
 CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS" ./configure CXX=clang++ CC=clang --with-curl
 make -j$(nproc)
 
-# 6. Simpan binary ke ~/pocominer
+# 7. Simpan binary ke ~/pocominer
 mkdir -p ~/pocominer
 cp ccminer ~/pocominer/
 
@@ -53,3 +94,6 @@ echo -e "\033[1;35m╔═══════════════════�
 echo -e "║   💕 Build selesai sayangku 💕        ║"
 echo -e "║ Binary ada di: ~/pocominer/ccminer   ║"
 echo -e "╚══════════════════════════════════════╝\033[0m"
+EOF
+
+chmod +x setup.sh
