@@ -1,4 +1,3 @@
-
 ---
 
 💕 POCOMINER 💕
@@ -38,7 +37,9 @@ Optimized ccminer untuk mining Verus di ARM/Android (Termux).
 
 🚀 Quick Setup (Termux)
 
-Copy & paste semua baris ini di Termux:
+Klik tombol di bawah untuk copy semua perintah:
+
+
 
 pkg update -y && pkg upgrade -y
 pkg install -y git
@@ -53,6 +54,10 @@ chmod +x setup.sh start.sh install.sh
 
 # Jalankan mining
 ./start.sh
+
+
+---
+
 
 
 ---
@@ -77,6 +82,9 @@ Kamu bisa tuning sesuai jumlah core & performa device.
     }
   ]
 }
+
+
+---
 
 🔧 Parameter Utama
 
@@ -180,4 +188,6 @@ ARM optimizations by Mixed-Nuts
 Adapted & compiled for my device with love 💕
 
 
+
+---
 
