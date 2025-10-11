@@ -1,4 +1,13 @@
 #!/data/data/com.termux/files/usr/bin/bash
+pkg update && pkg upgrade -y
+pkg install git -y
+pkg install wget -y
+pkg install proot -y
+pkg install unzip -y
+pkg install curl -y
+pkg install libjansson -y
+pkg install nano -y
+
 set -e
 
 while true; do
