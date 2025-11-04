@@ -6,8 +6,8 @@
   "statsavg": 60,
   "pools": [
     {
-      "url": "stratum+tcp://ap.luckpool.net:3956",
-      "user": "RWcMnQJ12z8TYiaQVg8BARTwcvLGQq59ib.mwekPOCOm4",
+      "url": "stratum+tcp://sg.vipor.net:5040",
+      "user": "RWcMnQJ12z8TYiaQVg8BARTwcvLGQq59ib.s20fe",
       "pass": "c=VRSC"
     }
   ]
